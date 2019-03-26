@@ -18,10 +18,13 @@ class Setning():
 
 class Medlimir():
     def __init__(self, nafn, gsm, heimasimi, email):
-        self.n                  afn = nafn
+        self.nafn = nafn
         self.gsm = gsm
         self.heimasimi = heimasimi
         self.email = email
+
+    def __str__(self):
+        return "Nafn : "+self.nafn+"\n"+"Gemsi : "+self.gsm+"\n"+"Heimasími : "+self.heimasimi+"\n"+"Netfang : "+self.email
 
     def breytaNafn(self, nafn):
         self.nafn = nafn
@@ -34,12 +37,6 @@ class Medlimir():
 
     def breytaEmail(self, email):
         self.email = email
-
-    def prentaUt(self):
-        print("Nafn :", self.nafn)
-        print("Gemsi : ", self.gsm)
-        print("Heimasími", self.heimasimi)
-        print("Netfang : ", self.email)
 
 class Nemandi():
     def __init__(self, nafn, aldur, braut):
@@ -83,14 +80,14 @@ class Bankareikningur():
         self.inneign = inneign
 
     def __str__(self):
-        return(self.nafn+":"+str(self.inneign)+" kr.")
+        return(self.nafn+": "+str(round(self.inneign, 1))+" kr.")
 
     def reikningarVextir(self):
         self.inneign += self.inneign*self.vextir
-        print(str(x+1), "mánuðinn :", self.inneign)
+        print(str(x+1), "mánuðinn"+" "*(3-len(str(x+1)))+":", round(self.inneign, 1))
 
-    def breytaVoxtum(self, nyirVextir):
-        self.vextir = nyirVextir
+    def breytaVoxtum(self, vextir=0.04):
+        self.vextir = vextir
 
 
 verkefni = ['Klasinn Setning', 'Klasinn Medlimir', 'Klasinn Nemandi', 'Klasinn Bankareikningur', 'Hætta'] 
@@ -107,30 +104,50 @@ while(True):
  
     elif(val == '2'):
         listiAfMedlimum = []
-        listiAfMedlimum.append(Medlimir("Einsr Geir Gabríelsson", 9822832, 2925378, "EinarGG@yahoo.com"))
-        listiAfMedlimum.append(Medlimir("Guðmundur Heimir Halldórsson", 2761562, 1236725, "GuðmundurHeimis@outlok.com"))
-        listiAfMedlimum.append(Medlimir("Dagný Ragna Kristínssdóttir", 2341782, 2872561, "DaggaRagga@gmail.com"))
 
-        print("Áður en að breytingar eiga sér stað:")
-        for x in listiAfMedlimum:
-            x.prentaUt()
+        for x in range(int(input("Hve marga notendur viltu búa til? : "))):
+            nafn = input("Hvað heitir notandinn? : ")
+            simanumer = input("Hvað er símanúmerið hans? : ")
+            heimasimi = input("Hvað er heimasímanúmerið hans? : ")
+            mail = input("Hvað er netfangið hans? : ")
+            listiAfMedlimum.append(Medlimir(nafn, simanumer, heimasimi, mail))
             greinaskil()
 
-        # Nafnið hans Einars var ekki skrifað rétt
-        listiAfMedlimum[0].breytaNafn("Einar Geir Gabríelsson")
-
-        # Email-ið hans Guðmunds var ekki skrifað rétt
-        listiAfMedlimum[1].breytaEmail("GuðmundurHeimir@outlook.com")
-
-        # Dagný breytti gemsa símanúmerinu sínu
-        listiAfMedlimum[2].breytaGsm(9837234)
-
-        print("Eftir að breytingar eiga sér stað:")
-        for x in listiAfMedlimum:
-            x.prentaUt()
+        while val != 0:
+            for teljari, x in enumerate(listiAfMedlimum):
+                print(x.nafn+":", teljari+1)
+            print("Hætta: 0")
+            val = int(input("Hverjum viltu breyta? : "))
             greinaskil()
+            val1 = ""
+            while val1 != "0" and val != 0:
+                print("Nafn: 1")
+                print("Gemsi: 2")
+                print("Heimasími: 3")
+                print("Netfang: 4")
+                print("Hætta: 0")
+                val1 = input("Hverju viltu breyta? : ")
+                greinaskil()
 
+                if val1 == "1":
+                    listiAfMedlimum[val-1].breytaNafn(input("Nýja nafnið : "))
 
+                elif val1 == "2":
+                    listiAfMedlimum[val-1].breytaGsm(input("Nýji gemsinn : "))
+
+                elif val1 == "3":
+                    listiAfMedlimum[val-1].breytaHeimasimi(input("Nýji heimasíminn : "))
+
+                elif val1 == "4":
+                    listiAfMedlimum[val-1].breytaEmail(input("Nýja netfangið : "))
+
+                else:
+                    break
+                greinaskil()
+
+        for x in listiAfMedlimum:
+            print(x)
+            greinaskil()
  
     elif(val == '3'):
         nofn = ["Heimir", "Ragnar", "Dagný", "Kristín", "Geir", "Hallgerður", "Halldór", "Krystian", "Gerður", "Björn"]
@@ -148,20 +165,29 @@ while(True):
         Nemandi.fjoldiBraut(nemendur)
         greinaskil()
 
-    elif(val == '4'): 
+    elif(val == '4'):
         jon = Bankareikningur("Jón", 2000)
         gunna = Bankareikningur("Gunna", 3000)
+        vextir = 0.01
+        while vextir != 0:
+            print(jon)
+            for x in range(12):
+                jon.reikningarVextir()
+            print(jon)
+            greinaskil()
 
-        print(jon)
-        for x in range(12):
-            jon.reikningarVextir()
-        print(jon)
+            print(gunna)
+            for x in range(12):
+                gunna.reikningarVextir()
+            print(gunna)
+            greinaskil()
 
-        greinaskil()
-        print(gunna)
-        for x in range(12):
-            gunna.reikningarVextir()
-        print(gunna)
+            print("Sláðu inn 0 ef að þú vilt hætta.")
+            vextir = float(input("Hve háir eiga vextirnir nú að vera? : "))
+            jon = Bankareikningur("Jón", 2000)
+            gunna = Bankareikningur("Gunna", 3000)
+            jon.breytaVoxtum(vextir)
+            gunna.breytaVoxtum(vextir)
 
     elif(val == '5'): 
         break
