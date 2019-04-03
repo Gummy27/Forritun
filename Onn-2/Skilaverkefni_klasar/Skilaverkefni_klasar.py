@@ -49,7 +49,7 @@ class Hnit():
 
     # Ef klasinn er prentaður út þá eru hnitin skiluð á stærðflæðilega réttum hætti.
     def __str__(self):
-        return(f"({self,x},{self.y})")
+        return(f"({self.x},{self.y})")
 
     # Fallið hvar tekur inn eiginleika klasans og notar hann til að finna á hvaða svæði hnitin eru.
     def hvar(self):
@@ -111,6 +111,11 @@ while(True):
 
         x, y = map(int, input("Skrifaðu inn x og y með bil á milli : ").split(" "))
         p2 = Hnit(x, y)
+
+        print("Punktarnir:")
+        print(p1)
+        print(p2)
+        greinaskil()
 
         print("Punktur 1:")
         print(p1.hvar()) # Hnit punktsins p1 er skrifað út.
