@@ -169,6 +169,12 @@ while True:
         if card == "None":
             thendi.append(spilastokkur.pop(0))
             teljari += 1
+    if len(thendi) == 1:
+        print("Olsen!")
+    elif len(thendi) == 0:
+        print("Olsen Olsen!")
+        print("Talvan vinnur!")
+        break
 
     greinaskil(turn)
     if teljari == 3:
