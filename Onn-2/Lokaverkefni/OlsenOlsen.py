@@ -46,10 +46,6 @@ def buaTilBunka():
     shuffle(bunki)
     return bunki
 
-def flippabunka(bunki):
-    if len(bunki) == 0:
-
-
 def gefa(bunki):
     notandi, talva = [], []
     for x in range(5):
@@ -78,7 +74,8 @@ def skrifaUtStodu(h1, h2, bunki):
 
     print("\n"," "*22, "Spilari")
 
-def spilanlegSpil(nhendi, spilastokkur1, spilanleg=[]):
+def spilanlegSpil(nhendi, spilastokkur1):
+    spilanleg = []
     for spil in nhendi:
         if spil.tala == spilastokkur1[0].tala or spil.takn == spilastokkur1[0].tala:
             spilanleg.append(spil)
@@ -105,34 +102,26 @@ while True:
     skrifaUtStodu(nhendi, thendi, spilastokkur1)
     teljari = 0
     spil = ""
-    skilabod = "Hvað viltu gera? : "
 
     # ============== Notandi ===============
-    while True:
+    while teljari != 3:
         spilanleg = spilanlegSpil(nhendi, spilastokkur1)
-        action = input(skilabod)
-        if action.lower() == "draga" and teljari != 3:
-            if len(spilanleg) > 0:
+        action = input("Hvað viltu gera? : ")
+
+        # Ef að notandi skrifar draga
+        if action.lower() == "draga":
+            if len(spilanleg) == 0:
                 nhendi.append(spilastokkur.pop(0))
                 skrifaUtStodu(nhendi, thendi, spilastokkur1)
                 greinaskil()
                 teljari += 1
+                if len(spilastokkur) == 0:
+                    spilastokkur = shuffle(spilastokkur1[1:])
+                    spilastokkur1 = spilastokkur1[0]
             else:
                 print("Þú mátt ekki draga þegar þú getur gert eitthvað.")
 
-        elif action.lower() == "pass" and teljari == 3:
-            print("Pass")
-            break
-
-        elif action.lower() == "olsen" and len(nhendi) == 1:
-            print("Olsen!")
-            break
-
-        elif action.lower() == "olsen olsen" and len(nhendi) == 0:
-            print("Olsen Olsen!")
-            break
-
-        elif teljari != 3:
+        else:
             try:
                 if int(action)-1 <= len(nhendi):
                     spil = nhendi[int(action) - 1]
@@ -141,26 +130,37 @@ while True:
                         greinaskil()
                         skrifaUtStodu(nhendi, thendi, spilastokkur1)
                         tala = spil.tala
-                        skilabod = "Viltu gera eitthvað meira? Skrifaðu pass ef þú vilt enda umferð. : "
                         teljari = 3
                     else:
                         print("Því miður eru þessi spil ekki lík. Dragðu ef að þú getur ekki gert neitt.")
             except:
                 print("Fyrirgefðu. Ég veit ekki hvað þú ert að reyna að gera. Til að draga skrifaðu draga")
+
+
+    while True:
+        action = input("Viltu gera eitthvað meira? Skrifaðu pass ef þú vilt enda umferð. : ")
+
+        if action.lower() == "pass" and teljari == 3:
+            break
+
+        elif action.lower() == "olsen" and len(nhendi) == 1:
+            break
+
+        elif action.lower() == "olsen olsen" and len(nhendi) == 0:
+            break
+
         else:
             try:
-                if int(action)-1 <= len(nhendi):
+                if nhendi[int(action)-1].tala == tala:
                     spil = nhendi[int(action) - 1]
-                    if spil.tala == tala:
-                        spilastokkur1.insert(0, nhendi.pop(nhendi.index(spil)))
-                        skrifaUtStodu(nhendi, thendi, spilastokkur1)
-                    else:
-                        print("Þessi spil hafa ekki eins tölur.")
-                else:
-                    print("Þetta spil er ekki til að svo stöddu.")
-            except:
-                print("Ég hef enga hugmynd hvað þú ert að reyna að gera. Skipanirnar eru pass, draga og olsen")
+                    spilastokkur1.insert(0, nhendi.pop(nhendi.index(spil)))
+                    greinaskil()
+                    skrifaUtStodu(nhendi, thendi, spilastokkur1)
 
+                else:
+                    print("Þessi tvö spil hafa ekki eins tölur.")
+            except:
+                print("Fyrirgefðu. Ég veit ekki hvað þú ert að reyna að gera. Til að enda umferð skrifaðu pass")
 
     if len(nhendi) == 1 and action.lower() != "olsen":
         print("Haha! gleymdir að segja olsen. Þú þarft að draga 3 spil.")
@@ -191,6 +191,9 @@ while True:
 
         if card == "None":
             thendi.append(spilastokkur.pop(0))
+            if len(spilastokkur) == 0:
+                spilastokkur = shuffle(spilastokkur1[1:])
+                spilastokkur1 = spilastokkur1[0]
             print("Draga")
             teljari += 1
 
@@ -211,8 +214,6 @@ while True:
     greinaskil(turn)
     if teljari == 3:
         print("Pass")
-
-
 
 
 

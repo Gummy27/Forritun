@@ -17,12 +17,6 @@ for x in range(fjoldi):
         print("="*lengd(fjoldi, 2), end="")
 '''
 
-str = "1"
-
-try:
-    int(str)
-    print("ÞEtta virkaði")
-
-except:
-    print("Þetta er ekki int")
-
+strengur = ["1", "2", "3", "4", "5"]
+strengur[1:].pop()
+print(strengur)
