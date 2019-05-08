@@ -229,11 +229,20 @@ while True:
             except:
                 print("Fyrirgefðu. Ég veit ekki hvað þú ert að reyna að gera. Til að enda umferð skrifaðu pass")
 
+    # Hér er gáð hvort að notandi hafi gleymt að skrifa olsen
     if len(nhendi) == 1 and action.lower() != "olsen":
         print("Haha! gleymdir að segja olsen. Þú þarft að draga 3 spil.")
         for x in range(3):
             nhendi.append(spilastokkur.pop(0))
-    elif action.lower() == "olsen olsen":
+
+    # Hér er gáð hvort að notandi hafi gleymt að skrifa olsen olsen.
+    elif len(nhendi) == 0 and action.lower() != "olsen olsen":
+        print("Haha! gleymdir að segja olsen olsen. Þú þarft að draga 3 spil.")
+        for x in range(3):
+            nhendi.append(spilastokkur.pop(0))
+
+    # Hér er gáð hvort að notandi hafi munað eftir því að skrifa olsen olsen.
+    elif action.lower() == "olsen olsen" and nhendi == 0:
         print("Spilari vann leikinn!")
         break
 
@@ -242,31 +251,39 @@ while True:
     teljari = 0
 
     # ================== Talva ==================
+    # While lykkja er hafinn og mun keyra þangað til að teljarinn er orðinn 3 sem annaðhvort þýðir að talvan hafi gert
+    # eða að hann hafi dregið 3 sinnum.
     while teljari < 3:
+        # Þessi card breyta er notuð til að gá hvort að talva hafi gert.
         card = "None"
-        for spil in thendi:
+        for spil in thendi: # Farið er í gegnum hendina hjá tölvunni.
+            # Gáð er hvort að spilið sé spilanlegt.
             if spil.takn == spilastokkur1[0].takn or spil.tala == spilastokkur1[0].takn:
-                spilastokkur1.insert(0, thendi.pop(thendi.index(spil)))
+                spilastokkur1.insert(0, thendi.pop(thendi.index(spil))) # Spilið er sett á bunkann
                 teljari = 4
-                card = spil
+                card = spil # Card breytan fær á sig spilið svo hægt sé að láta vita að talva hafi gert.
                 break
 
+        # Gáð er hvort að talva hafi gert svo hægt sé að draga ef hann hefur ekki getað gert neitt.
         if card == "None":
-            thendi.append(spilastokkur.pop(0))
-            if len(spilastokkur) == 0:
+            thendi.append(spilastokkur.pop(0)) # Talvan fær eitt annað spil.
+            if len(spilastokkur) == 0: # Gáð er hvort að spilastokkurinn sé tómur.
                 spilastokkur = shuffle(spilastokkur1[1:])
                 spilastokkur1 = [spilastokkur1[0]]
             print("Draga")
             teljari += 1
 
+    # Gáð er hvort að notandi hafi ekki gert svo hægt sé að segja pass.
     if card == "None":
         print("Pass!")
     else:
         print("Ég set út", spil)
 
+    # Gáð er hvort að talvan hafi 1 spil svo hún geti sagt olsen
     if len(thendi) == 1:
         print("Olsen!")
 
+    # Gáð er hvort að talvan hafi unnið.
     elif len(thendi) == 0:
         print("Olsen Olsen!")
         print("Talvan vinnur!")
