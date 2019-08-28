@@ -12,7 +12,7 @@ words_list = input().split(' ')
 lengd = len(words_list)
 
 for x in range(lengd):
-    if len(words_list[x]) >= 7:
+    if len(words_list[x]) >= 6:
         words_list[x] = words_list[x].upper()
     else:
         words_list[x] = words_list[x].lower()
