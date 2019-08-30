@@ -28,18 +28,18 @@ def readFile():
         print('Ekki tókst að opna skránna!')
 
     finally:
-        return reikningar
-
-def writeFile(accList):
+        global invoiceList
+        invoiceList = reikningar
+        
+def writeFile():
     try:
         with open('invoice.csv', 'w', encoding='utf-8') as csv_file:
-            for acc in accList:
+            for acc in invoiceList:
                 csv_file.write(';'.join(list(map(str, vars(acc).values())))+'\n')
     except:
         print('Ekki tókst að opna skránna!')
 
 def addInvoice():
-    global invoiceList
     partNumber = int(input("Part number: "))
     partDescription = input("Part description: ")
     quantity = int(input("Quantity: "))
@@ -48,11 +48,29 @@ def addInvoice():
     newAccount = Invoice(partNumber, partDescription, quantity, pricePerItem)
     invoiceList.append(newAccount)
 
-def printInvoice(accList):
-    for acc in accList:
+def printInvoice():
+    for acc in invoiceList:
         print(f'{acc.partDescription}: {acc.getInvoiceAmount()}')
 
-invoiceList = readFile()
-addInvoice()
-writeFile(invoiceList)
-printInvoice(invoiceList)
+def delInvoice():
+    nr = int(input("Hvað er númerið á hlutnum sem þú vilt eyða? : "))
+    for index, part in enumerate(invoiceList):
+        if part.partNumber == nr:
+            del invoiceList[index]
+            break
+
+def updateInvoice():
+    nr = int(input("Hvað er númerið á hlutnum sem þú vilt uppfæra? : "))
+    for index, part in enumerate(invoiceList):
+        if part.partNumber == nr:
+            part.pricePerItem = int(input("Hvað kostar varan mikið? : "))
+            break
+
+readFile()
+
+#addInvoice()
+# printInvoice()
+delInvoice()
+# updateInvoice()
+
+writeFile()
