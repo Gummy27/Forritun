@@ -18,13 +18,13 @@ class Invoice:
 def readFile():
     reikningar = []
     try:
-        with open('invoice.csv', 'r') as csv_file:
+        with open('invoice.csv', 'r', encoding='utf-8') as csv_file:
             for account in csv.reader(csv_file, delimiter=';'):
                 try:
                     reikningar.append(Invoice(int(account[0]), account[1], int(account[2]), int(account[3])))
                 except:
                     print('Villa við innsetningu breytna!')
-    except:
+    except IOError:
         print('Ekki tókst að opna skránna!')
 
     finally:
@@ -32,7 +32,7 @@ def readFile():
 
 def writeFile(accList):
     try:
-        with open('invoice.csv', 'w') as csv_file:
+        with open('invoice.csv', 'w', encoding='utf-8') as csv_file:
             for acc in accList:
                 csv_file.write(';'.join(list(map(str, vars(acc).values())))+'\n')
     except:
@@ -40,10 +40,10 @@ def writeFile(accList):
 
 def addInvoice():
     global invoiceList
-    partNumber = input("Part number: ")
+    partNumber = int(input("Part number: "))
     partDescription = input("Part description: ")
-    quantity = input("Quantity: ")
-    pricePerItem = input("Price of the item: ")
+    quantity = int(input("Quantity: "))
+    pricePerItem = int(input("Price of the item: "))
 
     newAccount = Invoice(partNumber, partDescription, quantity, pricePerItem)
     invoiceList.append(newAccount)
