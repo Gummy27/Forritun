@@ -5,14 +5,18 @@ class Invoice:
     def __init__(self, partNumber,partDescription,quantity,pricePerItem):
         self.partNumber = partNumber
         self.partDescription = partDescription
-        self.quantity = quantity
-        self.pricePerItem = pricePerItem
+        self.quantity = int(quantity)
+        self.pricePerItem = float(pricePerItem)
 
     #Calculate InvoiceAmount
     def getInvoiceAmount(self):
         return self.quantity * self.pricePerItem
 
     def printInvoice(self):
+        bil = int((36 - len(self.partDescription))/2-2)
+
+
+        print('='*bil, self.partDescription, '='*bil)
         print('Partnumber: {}\nPart Description: {}\nQuantity: {}\nPrice Per Item: {}'.format(self.partNumber,self.partDescription,self.quantity,self.pricePerItem))
 
 def readFile():
@@ -21,7 +25,7 @@ def readFile():
         with open('invoice.csv', 'r', encoding='utf-8') as csv_file:
             for account in csv.reader(csv_file, delimiter=';'):
                 try:
-                    reikningar.append(Invoice(int(account[0]), account[1], int(account[2]), int(account[3])))
+                    reikningar.append(Invoice(account[0], account[1], account[2], account[3]))
                 except:
                     print('Villa við innsetningu breytna!')
     except IOError:
@@ -50,7 +54,8 @@ def addInvoice():
 
 def printInvoice():
     for acc in invoiceList:
-        print(f'{acc.partDescription}: {acc.getInvoiceAmount()}')
+        acc.printInvoice()
+        # print(f'{acc.partDescription}: {acc.getInvoiceAmount()}')
 
 def delInvoice():
     nr = int(input("Hvað er númerið á hlutnum sem þú vilt eyða? : "))
@@ -69,8 +74,8 @@ def updateInvoice():
 readFile()
 
 #addInvoice()
-# printInvoice()
-delInvoice()
+printInvoice()
+# delInvoice()
 # updateInvoice()
 
 writeFile()
