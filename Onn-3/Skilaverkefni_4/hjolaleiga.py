@@ -108,7 +108,7 @@ class Skjar():
 
         self.frame = rtBikesFrame
 
-    def successful
+#    def successful
 
     def close_window(self):
         self.win.destroy()
