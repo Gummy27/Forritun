@@ -1,6 +1,8 @@
 from tkinter import *
 import csv
 
+
+
 class Skjar():
     def __init__(self):
         with open('hjol.csv', 'r', newline='', encoding='utf-8') as file:
@@ -21,6 +23,9 @@ class Skjar():
 
         availableBikes = Button(selectionFrame, text='Available bikes', command=self.chooseBike)
         availableBikes.pack(fill=X)
+
+        rentBike = Button(selectionFrame, text='Rent a bike', command=self.chooseBike())
+        rentBike.pack(fill=X)
 
         returnBike = Button(selectionFrame, text='Return a bike', command=self.returnBike)
         returnBike.pack(fill=X)
@@ -109,7 +114,6 @@ class Skjar():
         self.frame = rtBikesFrame
 
 #    def successful
-
     def close_window(self):
         self.win.destroy()
 
