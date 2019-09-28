@@ -1,8 +1,6 @@
 from tkinter import *
 import csv
 
-
-
 class Skjar():
     def __init__(self):
         with open('hjol.csv', 'r', newline='', encoding='utf-8') as file:
@@ -21,10 +19,7 @@ class Skjar():
         selectionFrame = Frame(self.win)
         selectionFrame.pack()
 
-        availableBikes = Button(selectionFrame, text='Available bikes', command=self.chooseBike)
-        availableBikes.pack(fill=X)
-
-        rentBike = Button(selectionFrame, text='Rent a bike', command=self.chooseBike())
+        rentBike = Button(selectionFrame, text='Rent a bike', command=self.chooseBike)
         rentBike.pack(fill=X)
 
         returnBike = Button(selectionFrame, text='Return a bike', command=self.returnBike)
@@ -87,6 +82,8 @@ class Skjar():
         message = Label(orderFrame, text=f'You have successfully ordered a {self.ihusi[hjol]} on {words[basis]} basis')
         message.pack()
 
+        self.ileigu.append(self.ihusi.pop(hjol)+'-'+basis)
+
         returnButton = Button(orderFrame, text='Back', command=self.valmynd)
         returnButton.pack()
 
@@ -108,14 +105,37 @@ class Skjar():
 
         for index, hjol in enumerate(self.ileigu):
             nafn, letter = hjol.split('-')
-            takki = Button(rtBikesFrame, text=f'{nafn} that was rented on {basis[letter]} basis')
+            takki = Button(rtBikesFrame, text=f'{nafn} that was rented on {basis[letter]} basis', command=lambda hjol=index : self.returnSuccessful(hjol))
             takki.pack(fill=X)
 
         self.frame = rtBikesFrame
 
+    def returnSuccessful(self, hjol):
+        self.clear()
+
+        rtsFrame = Frame(self.win)
+        rtsFrame.pack()
+
+        message = Label(rtsFrame, text=f'You have successfuly returned the {self.ileigu[hjol].split("-")[0]}')
+        message.pack()
+
+        self.ihusi.append(self.ileigu.pop(hjol).split('-')[0])
+        print(self.ihusi)
+
+        returnButton = Button(rtsFrame, text='Back', command=self.valmynd)
+        returnButton.pack()
+
+        self.frame = rtsFrame
+
 #    def successful
     def close_window(self):
         self.win.destroy()
+
+        with open('hjol.csv', 'w', newline='', encoding='utf-8') as file:
+            file.write(','.join(self.ihusi)+'\n')
+            file.write(','.join(self.ileigu)+'\n')
+
+
 
 
 
