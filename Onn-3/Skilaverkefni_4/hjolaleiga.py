@@ -8,10 +8,16 @@ class Skjar():
             self.ihusi = list(csv.reader(ihusi, delimiter=','))[0]
             self.ileigu = list(csv.reader(ileigu, delimiter=','))[0]
 
+            self.ihusi.sort()
+            self.ileigu.sort()
+
         self.win = Tk()
         self.frame = Frame()
 
         self.valmynd()
+
+    def clear(self):
+        self.frame.destroy()
 
     def valmynd(self):
         self.clear()
@@ -32,9 +38,6 @@ class Skjar():
 
     # ---- Panta hjól föll ----
 
-    def clear(self):
-        self.frame.destroy()
-
     def chooseBike(self):
         self.clear()
 
@@ -47,6 +50,9 @@ class Skjar():
                 takki = Button(chBikesFrame, text=hjol, command=lambda hjol=index: self.basis(hjol))
                 takki.pack(fill=X)
                 nafn = hjol
+
+        backButton = Button(chBikesFrame, text="Back", command=self.valmynd)
+        backButton.pack(fill=X)
 
         self.frame = chBikesFrame
 
@@ -64,6 +70,7 @@ class Skjar():
 
         weeklyButton = Button(basisFrame, text='Request a bike on a weekly basis.', command=lambda basis='w', hjol=hjol : self.orderSuccessful(basis, hjol))
         weeklyButton.pack(fill=X)
+
 
         self.frame = basisFrame
 
@@ -108,6 +115,9 @@ class Skjar():
             takki = Button(rtBikesFrame, text=f'{nafn} that was rented on {basis[letter]} basis', command=lambda hjol=index : self.returnSuccessful(hjol))
             takki.pack(fill=X)
 
+        backButton = Button(rtBikesFrame, text="Back", command=self.valmynd)
+        backButton.pack(fill=X)
+
         self.frame = rtBikesFrame
 
     def returnSuccessful(self, hjol):
@@ -120,7 +130,6 @@ class Skjar():
         message.pack()
 
         self.ihusi.append(self.ileigu.pop(hjol).split('-')[0])
-        print(self.ihusi)
 
         returnButton = Button(rtsFrame, text='Back', command=self.valmynd)
         returnButton.pack()
@@ -134,9 +143,6 @@ class Skjar():
         with open('hjol.csv', 'w', newline='', encoding='utf-8') as file:
             file.write(','.join(self.ihusi)+'\n')
             file.write(','.join(self.ileigu)+'\n')
-
-
-
 
 
 skjar = Skjar()

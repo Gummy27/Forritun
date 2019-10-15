@@ -1,4 +1,3 @@
-
 from tkinter import *
 from os import listdir
 from pygame import mixer
@@ -13,6 +12,7 @@ class MusicPlayer():
     def spila(self, oldPath, newPath):
 
         mixer.init()
+        print(oldPath+"/"+newPath)
         mixer.music.load(oldPath+"/"+newPath)
         mixer.music.play()
         self.isPlaying = True
@@ -26,10 +26,10 @@ class MusicPlayer():
             self.isPlaying = True
 
 class Navigator():
-    def __init__(self):
+    def __init__(self, path):
         self.frameList = Frame(win)
         self.frameList.grid(row=0)
-        self.mediaPath = "C:/Users/Brimi/Music"
+        self.mediaPath = path
 
         for y, x in enumerate(listdir(self.mediaPath)):
             print(x)
@@ -50,6 +50,7 @@ class Navigator():
 
         else:
             for y, x in enumerate(listdir(self.mediaPath)):
+                print("Here!")
                 takki = Button(self.frameList, text=x, command=lambda x=x: spilari.spila(self.mediaPath, x))
                 takki.pack()
 
@@ -83,6 +84,6 @@ quitButton.grid(row=0, column=1, sticky=W)
 backButton = Button(frameControls, text="Back", command=lambda : pathGenerator(back=False))
 backButton.grid(row=0, column=2)
 
-gluggi = Navigator()
+gluggi = Navigator(input("Hvar er tonlístar mappan? : "))
 
 win.mainloop()
