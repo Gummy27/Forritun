@@ -1,72 +1,162 @@
 import pygame
-from random import choice
+from random import randint
 from time import time, sleep
 import csv
 
 shapes = []
+litir = []
 with open('shapes.csv', 'r') as file:
     listi = list(csv.reader(file, delimiter=' '))
     for shape in listi:
-        shapes.append(list(csv.reader(shape)))
+        # print(list(csv.reader(shape))[0:-1])
+        shapes.append(list(csv.reader(shape))[0:-1])
+        litur = list(map(int, list(shape[-1].split(','))))
+        litir.append(tuple(map(int, litur)))
 
 class Shape():
-    def __init__(self):
-        self.shape = choice(shapes)
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+        index = randint(0, 6)
+        self.shape = shapes[index]
+        self.color = litir[index]
         self.moving = True
 
         self.calculateWidthHeight()
 
     def rotate(self):
+        global x, y
+        restoreShape = self.shape
+        restoreHeight = self.height
+        restoreWidth = self.width
+        restoreHeightPos = self.heightPos
+        restoreWidthPos = self.widthPos
+        restoreX = x
+        restoreY = y
+
         size_of_matrix = len(self.shape)
         matrix = []
-        for x in range(size_of_matrix):
+        for a in range(size_of_matrix):
             matrix.append([])
             for i in range(size_of_matrix):
-                matrix[x].append('*')
-        print(matrix)
+                matrix[a].append('*')
 
-        for x in range(size_of_matrix):
-            for y in range(size_of_matrix):
-                matrix[x][y] = self.shape[::-1][y][x]
+        for a in range(size_of_matrix):
+            for b in range(size_of_matrix):
+                matrix[a][b] = self.shape[::-1][b][a]
 
         self.shape = matrix
         self.calculateWidthHeight()
 
+        if not self.leftCollision() or not self.rightCollision():
+            self.shape = restoreShape
+            self.height = restoreHeight
+            self.width = restoreWidth
+            self.heightPos = restoreHeightPos
+            self.widthPos = restoreWidthPos
+            x = restoreX
+            y = restoreY
+
     def calculateWidthHeight(self):
         loop = len(self.shape)
-        self.height, self.width = 0, 0
+
+        self.height = 0
+        self.width = 0
+        self.widthPos = 0
+        self.heightPos = 0
         for x in range(loop):
-            highest, widest = 0, 0
+            for i in range(loop):
+                if self.shape[x][i] == '#':
+                    self.height += size
+                    break
+            if self.height == 0:
+                self.heightPos += size
+
+        for x in range(loop):
             for i in range(loop):
                 if self.shape[i][x] == '#':
-                    highest += 1
-                if self.shape[x][i] == '#':
-                    widest += 1
-            if self.height < highest:
-                self.height = highest
-
-            if self.width < widest:
-                self.width = widest
-
-        self.height *= size
+                    self.width += size
+                    break
+            if self.width == 0:
+                self.widthPos += size
 
 
-    def drawShape(self, x, y):
-        win.fill((0, 0, 0))
+        # print(f"Width: {self.width}    Height: {self.height}")
+
+    def moved(self, x, y):
+        self.x, self.y = x, y
+
+    def drawShape(self):
+        # game.drawBackground()
+        # self.savePos = []
         for yy, listi in enumerate(self.shape):
             for xx, bool in enumerate(listi):
                 if bool == '#':
-                    pygame.draw.rect(win, (255, 255, 255), [x + size * xx, y + size * yy, size, size], 0)
-        pygame.display.update()
+                    pygame.draw.rect(win, self.color, [self.x + size * xx, self.y + size * yy, size, size], 0)
+                    # self.savePos.append([int((self.x + size * xx)/size), int((self.y + size * yy)/size)])
 
-    def collision(self, x, y):
-        if y + size + self.height < 500 - size:
+    def downCollision(self):
+        if y + self.height - self.heightPos < 475:
             return True
         else:
+            # game.saveShapePos(self.savePos)
             self.moving = False
             return False
 
-# your code
+    def leftCollision(self):
+        if x + self.widthPos > 0:
+            return True
+        else:
+            return False
+
+    def rightCollision(self):
+        if x + self.width + self.widthPos < 350:
+            return True
+        else:
+            return False
+
+class Blocks():
+    def __init__(self):
+        self.blocks = []
+
+        self.matrix = []
+        for x in range(19):
+            temp = []
+            for i in range(14):
+                temp.append('*')
+            self.matrix.append(temp)
+
+    def append(self, object):
+        print(object.shape)
+        for x in object.shape:
+            pass
+
+
+        self.blocks.append(object)
+
+    def drawShapes(self):
+        win.fill((0, 0, 0))
+
+        for block in self.blocks:
+            block.drawShape()
+
+        pygame.display.update()
+
+    # def collisions(self):
+        # player = self.blocks[-1]
+        # for block in self.blocks[0:-1]:
+        #    for
+
+    def placed(self):
+        for yy, listi in enumerate(self.blocks[-1].shape):
+            for xx, bool in enumerate(listi):
+                if bool == '#':
+                    self.matrix[int((self.blocks[-1].y + size * yy)/25)][int((self.blocks[-1].x + size * xx)/25)] = '#'
+        for x in self.matrix:
+            print(x)
+
+
+resolution = (350, 475)
+
 start_time_down = time()
 start_time_move = time()
 
@@ -74,61 +164,58 @@ pygame.init()
 pygame.font.init()
 
 size = 25
-win = pygame.display.set_mode((500, 475))
+win = pygame.display.set_mode(resolution)
+# game = Battlefield(resolution)
 
 pygame.display.set_caption("First Game")
 
+blocks = Blocks()
 
 running = True
-
 while running:
-    x, y = 100, 100
+    x, y = 150, 100
 
-    player = Shape()
-    player.drawShape(x, y)
+    blocks.append(Shape(x, y))
+    blocks.drawShapes()
+
     pygame.display.update()
-    while player.moving:
+
+    while blocks.blocks[-1].moving and running:
         for event in pygame.event.get():
              if event.type == pygame.QUIT:
                  running = False
 
         if time() - start_time_down > 1.5:
-            if player.collision(x, y):
+            if blocks.blocks[-1].downCollision():
                 y += size
-                player.drawShape(x, y)
+                blocks.blocks[-1].moved(x, y)
+                blocks.drawShapes()
 
             start_time_down = time()
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and time() - start_time_move > 0.2:
-            x -= size
+        moves = [
+            [keys[pygame.K_LEFT],'left'],
+            [keys[pygame.K_RIGHT],'right'],
+            [keys[pygame.K_UP],'up'],
+            [keys[pygame.K_DOWN],'down']
+        ]
+        for move in moves:
+            if move[0] and time() - start_time_move > 0.2:
+                if move[1] == 'left' and blocks.blocks[-1].leftCollision():
+                    x -= size
 
-            player.drawShape(x, y)
+                elif move[1] == 'right' and blocks.blocks[-1].rightCollision():
+                    x += size
 
-            start_time_move = time()
-            start_time_down = time()
+                elif move[1] == 'up':
+                    blocks.blocks[-1].rotate()
 
-        if keys[pygame.K_RIGHT] and time() - start_time_move > 0.2:
-            x += size
+                elif move[1] == 'down' and blocks.blocks[-1].downCollision():
+                    y += size
 
-            player.drawShape(x, y)
+                blocks.blocks[-1].moved(x, y)
+                blocks.drawShapes()
 
-            start_time_move = time()
-            start_time_down = time()
-
-        if keys[pygame.K_UP] and time() - start_time_move > 0.2:
-            player.rotate()
-            player.drawShape(x, y)
-
-            start_time_move = time()
-            start_time_down = time()
-
-        if keys[pygame.K_DOWN] and time() - start_time_move > 0.2:
-            if player.collision(x, y):
-                y += size
-                player.drawShape(x, y)
-
-            start_time_down = time()
-            start_time_move = time()
-
-
+                start_time_move = time()
+    blocks.placed()
