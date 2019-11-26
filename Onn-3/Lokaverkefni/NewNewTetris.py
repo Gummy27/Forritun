@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from random import randint
 from time import time, sleep
 import csv
@@ -18,6 +19,7 @@ def gr():
 
 class Grid():
     def __init__(self):
+        self.scoreCount = 0
         self.playing_field = []
         for x in range(19):
             temp = []
@@ -26,7 +28,6 @@ class Grid():
             self.playing_field.append(temp)
 
         self.blocks = []
-
 
     def new_block(self):
         self.player = Block()
@@ -49,7 +50,7 @@ class Grid():
                 if value != '*':
                     self.playing_field[y][x] = 'p'+str(obj.index)
 
-    def collision(self, x, y):
+    def collision(self, x=0, y=0):
         x += self.player.x
         y += self.player.y
         try:
@@ -61,12 +62,10 @@ class Grid():
                     if value != '*':
                         # Check if the value is not a placeholder
                         if x + col < 0:
-                            print("Below Zero")
                             return False
                         elif self.playing_field[y+row][x+col] != '_':
                             # Checking the value is not a part of a player indicator
                             if self.playing_field[y+row][x+col][0] != 'p':
-                                print("Colliding with another shape")
                                 return False
                 # print()
 
@@ -76,7 +75,6 @@ class Grid():
             self.place_player_on_grid(self.player)
             return True
         except:
-            print("Out of bounds")
             return False
 
     def draw_graphics(self):
@@ -89,7 +87,19 @@ class Grid():
                 elif value != '_':
                     pygame.draw.rect(win, (litir[int(value)]), [col * size, row * size, size, size], 0)
 
+        self.setUpScoreText()
+
+        win.blit(self.score, self.scoreCords)
         pygame.display.update()
+
+    def setUpScoreText(self):
+        textColor = (255, 0, 0)
+        bkgrColor = (0, 0, 0)
+        font = pygame.font.Font('freesansbold.ttf', 32)
+
+        self.score = font.render(f"Score: {self.scoreCount}", True, textColor, bkgrColor)
+        self.scoreCords = self.score.get_rect()
+        self.scoreCords.center = (350 // 2, 15)
 
     def check_if_clear(self):
         cleared_rows = []
@@ -101,8 +111,9 @@ class Grid():
             if clear:
                 cleared_rows.append(row)
 
-        print(cleared_rows[::-1])
         if len(cleared_rows) > 0:
+            self.scoreCount += 100 * len(cleared_rows)
+
             for line in cleared_rows[::-1]:
                 del self.playing_field[line]
             for x in range(len(cleared_rows)):
@@ -147,58 +158,91 @@ win = pygame.display.set_mode(resolution)
 
 pygame.display.set_caption("Tetris")
 
-dev = True
 grid = Grid()
+
 running = True
+playing = True
 while running:
-    grid.new_block()
+    while playing:
+        grid.new_block()
+        if not grid.collision():
+            playing = False
 
-    while grid.player.playing and running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-        # Checks if time passed is more than 2 seconds
-        if time() - start_time_down > 2 and dev:
-                if not grid.collision(0, 1):
+        while grid.player.playing:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     grid.player.playing = False
+                    running = False
 
-                start_time_down = time()
-                grid.draw_graphics()
-
-        keys = pygame.key.get_pressed()
-        moves = [
-            [keys[pygame.K_LEFT], 'left'],
-            [keys[pygame.K_RIGHT], 'right'],
-            [keys[pygame.K_UP], 'up'],
-            [keys[pygame.K_DOWN], 'down']
-        ]
-        # This for loops loops through all the moves that the game responds to.
-        for move in moves:
-            # Checks if the button has been pressed and that enough time has passed for another move
-            if move[0] and time() - start_time_move > 0.1:
-                # Left button
-                if move[1] == 'left':
-                    grid.collision(-1, 0)
-
-                # Right Button
-                if move[1] == 'right':
-                    grid.collision(1, 0)
-
-                # Up button
-                if move[1] == 'up':
-                    grid.player.rotate()
-                    grid.place_player_on_grid(grid.player)
-
-                # Down button
-                if move[1] == 'down':
-                    if not grid.collision(0, 1):
+            # Checks if time passed is more than 2 seconds
+            if time() - start_time_down > 2:
+                    if not grid.collision(y=1):
                         grid.player.playing = False
 
+                    start_time_down = time()
+                    grid.draw_graphics()
 
-                start_time_move = time()
-            grid.draw_graphics()
+            keys = pygame.key.get_pressed()
+            moves = [
+                [keys[pygame.K_LEFT], 'left'],
+                [keys[pygame.K_RIGHT], 'right'],
+                [keys[pygame.K_UP], 'up'],
+                [keys[pygame.K_DOWN], 'down']
+            ]
+            # This for loops loops through all the moves that the game responds to.
+            for move in moves:
+                # Checks if the button has been pressed and that enough time has passed for another move
+                if move[0] and time() - start_time_move > 0.1:
+                    # Left button
+                    if move[1] == 'left':
+                        grid.collision(x=-1)
 
-    grid.save_player_to_grid()
-    grid.check_if_clear()
-    print("ok")
+                    # Right Button
+                    if move[1] == 'right':
+                        grid.collision(x=1)
+
+                    # Up button
+                    if move[1] == 'up':
+                        grid.player.rotate()
+                        grid.place_player_on_grid(grid.player)
+
+                    # Down button
+                    if move[1] == 'down':
+                        if not grid.collision(y=1):
+                            grid.player.playing = False
+
+
+                    start_time_move = time()
+                grid.draw_graphics()
+
+        grid.save_player_to_grid()
+        grid.check_if_clear()
+
+    textColor = (255, 0, 0)
+    bkgrColor = (0, 0, 0)
+
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    gameOver = font.render('Game Over!', True, textColor, bkgrColor)
+    gameOverCords = gameOver.get_rect()
+    gameOverCords.center = (350 // 2, 475 // 2)
+
+    font = pygame.font.Font('freesansbold.ttf', 18)
+    instructions = font.render('Press any key to play again', True, textColor, bkgrColor)
+    instructionsCords = instructions.get_rect()
+    instructionsCords.center = (350 // 2, 475 // 2+34)
+
+    win.blit(gameOver, gameOverCords)
+    win.blit(instructions, instructionsCords)
+    pygame.display.update()
+
+    while True:
+        event = pygame.event.wait()
+        if event.type == pygame.QUIT:
+            running = False
+            break
+
+        elif event.type == KEYDOWN:
+            playing = True
+            grid = Grid()
+            break
+
