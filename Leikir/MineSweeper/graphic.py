@@ -1,9 +1,11 @@
 import pygame
-from random import randint
 from time import sleep
+from board_generator import *
 
 grid = 64
 size = 15
+
+board = board_generator(grid)
 
 resolution = (size*grid, size*grid)
 
@@ -24,10 +26,30 @@ running = True
 
 def changeBlock(x, y):
     print("Hann kom hér í gegn")
-    print(x*size*2, y*size*2)
-    pygame.draw.rect(win, (255, 0, 0), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
-    pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
+
+    if board[x][y] == 0:
+        pygame.draw.rect(win, (255, 0, 0), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
+        pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
+
+
+
+    elif board[x][y] < 9:
+        pygame.draw.rect(win, (255, 0, 0), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
+        pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
+
+        font = pygame.font.Font('freesansbold.ttf', 18)
+        instructions = font.render(str(board[x][y]), True, (0, 0, 0), (255, 255, 255))
+        instructionsCords = instructions.get_rect()
+        instructionsCords.center = ((x-1)*size*2+15, (y-1)*size*2+15)
+        win.blit(instructions, instructionsCords)
+
+    else:
+        pygame.draw.rect(win, (255, 255, 255), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
+        pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
+
     pygame.display.update()
+
+
 
 while running:
     print("Ok")
@@ -51,6 +73,5 @@ while running:
                 break
         print(index)
         changeBlock(index[0], index[1])
-
 
 
