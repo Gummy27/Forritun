@@ -8,7 +8,7 @@ def board_generator(size):
             temp.append(0)
         board.append(temp)
 
-    for i in range(size*size//6):
+    for i in range(size*size//9):
         x, y = randint(0, size-1), randint(0, size-1)
         board[x][y] = 9
 

@@ -52,7 +52,6 @@ def changeBlock(x, y):
 
 
 while running:
-    print("Ok")
     for event in pygame.event.get():
          if event.type == pygame.QUIT:
              running = False
@@ -71,7 +70,6 @@ while running:
 
             if index[0] != 0 and index[1] != 0:
                 break
-        print(index)
         changeBlock(index[0], index[1])
 
 
