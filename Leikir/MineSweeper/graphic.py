@@ -25,31 +25,49 @@ pygame.display.update()
 running = True
 
 def changeBlock(x, y):
-    print("Hann kom hér í gegn")
+    try:
+        if board[x][y] == 0:
+            pygame.draw.rect(win, (255, 0, 0), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
+            pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
 
-    if board[x][y] == 0:
-        pygame.draw.rect(win, (255, 0, 0), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
-        pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
+        elif board[x][y] < 9:
+            pygame.draw.rect(win, (255, 0, 0), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
+            pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
 
+            font = pygame.font.Font('freesansbold.ttf', 18)
+            instructions = font.render(str(board[x][y]), True, (0, 0, 0), (255, 255, 255))
+            instructionsCords = instructions.get_rect()
+            instructionsCords.center = ((x-1)*size*2+15, (y-1)*size*2+15)
+            win.blit(instructions, instructionsCords)
 
+        else:
+            pygame.draw.rect(win, (255, 255, 255), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
+            pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
 
-    elif board[x][y] < 9:
-        pygame.draw.rect(win, (255, 0, 0), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
-        pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
+    except:
+        if board[x][y] == 'o':
+            pygame.draw.rect(win, (192, 192, 192), [(x - 1) * size * 2, (y - 1) * size * 2, size * 2, size * 2], 0)
+            pygame.draw.rect(win, (0, 0, 0), [(x - 1) * size * 2, (y - 1) * size * 2, size * 2, size * 2], 1)
 
-        font = pygame.font.Font('freesansbold.ttf', 18)
-        instructions = font.render(str(board[x][y]), True, (0, 0, 0), (255, 255, 255))
-        instructionsCords = instructions.get_rect()
-        instructionsCords.center = ((x-1)*size*2+15, (y-1)*size*2+15)
-        win.blit(instructions, instructionsCords)
+            font = pygame.font.Font('freesansbold.ttf', 18)
+            instructions = font.render('f', True, (0, 0, 0), (255, 255, 255))
+            instructionsCords = instructions.get_rect()
+            instructionsCords.center = ((x - 1) * size * 2 + 15, (y - 1) * size * 2 + 15)
+            win.blit(instructions, instructionsCords)
 
-    else:
-        pygame.draw.rect(win, (255, 255, 255), [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 0)
-        pygame.draw.rect(win, (0, 0, 0),   [(x-1)*size*2, (y-1)*size*2, size*2, size*2], 1)
+def getMousePos():
+    x, y = pygame.mouse.get_pos()
+    index = [0, 0]
+    for i in range(grid):
+        if x <= i * size * 2 and index[0] == 0:
+            index[0] = i
 
-    pygame.display.update()
+        if y <= i * size * 2 and index[1] == 0:
+            index[1] = i
 
-
+        if index[0] != 0 and index[1] != 0:
+            break
+    return index
 
 while running:
     for event in pygame.event.get():
@@ -57,19 +75,23 @@ while running:
              running = False
 
     if pygame.mouse.get_pressed()[0]:
-        x, y = pygame.mouse.get_pos()
-        # print(x, y)
-
-        index = [0, 0]
-        for i in range(grid):
-            if x <= i*size*2 and index[0] == 0:
-                index[0] = i
-
-            if y <= i*size*2 and index[1] == 0:
-                index[1] = i
-
-            if index[0] != 0 and index[1] != 0:
-                break
+        index = getMousePos()
         changeBlock(index[0], index[1])
 
+        if board[index[0]][index[1]] == 0:
+            blocks_to_be_revealed, blank_blocks = [], []
+            yes, cords = huge_reveal(board, [index[0], index[1]])
+            if len(yes) > 1 :
+                for x, y in cords:
+                    changeBlock(x, y)
 
+        pygame.display.update()
+
+    if pygame.mouse.get_pressed()[1]:
+        x, y = pygame.mouse.get_pos()
+
+        board[x][y] = 'f'
+
+        changeBlock(x, y)
+
+        pygame.display.update()
