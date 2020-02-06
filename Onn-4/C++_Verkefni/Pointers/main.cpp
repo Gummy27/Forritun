@@ -13,7 +13,8 @@ void leggjaTiuVidTiu(int* fylki, int staerd) {
 }
 
 void leggjaSamanFimm(int& a) {
-    a += 5;
+    a += 5;int vector[] = { 3, -5, 7, 10, -4, 14, 5, 2, -13 };
+int n = sizeof(vector) / sizeof(vector[0]);
 }
 
 int main(){

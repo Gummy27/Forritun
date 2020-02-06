@@ -21,7 +21,7 @@ void AddToCollection(Collection &col, int element) {
         col.elno++;
     } else { // Annars
         // Búa til temp array af stærð col.elno + 1 á heap
-        int* temp = new int[col.elno+1];6
+        int* temp = new int[col.elno+1];
         // Afrita stökin í col.elements yfir í temp array-ið
         for(int i = 0; i < col.elno; i++)
             temp[i] = col.elements[i];
