@@ -1,8 +1,7 @@
 #include <iostream>
 using namespace std;
 
-
-int main(){
+int main() {
     int matrix[10][10] = { };
     int* matrix_ptr = matrix[0];
 
@@ -20,6 +19,6 @@ int main(){
         }
         cout << endl;
     }
-
+    
     return 0;
 }
