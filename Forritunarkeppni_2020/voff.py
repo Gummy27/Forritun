@@ -6,8 +6,4 @@
 n, k = list(map(int, input().split(' ')))
 a = list(map(int, input().split(' ')))
 
-dogs = [1]
-hundar = 1
-temp = 0
-for index, gelt in enumerate(a):
-    pass
+
