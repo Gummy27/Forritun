@@ -10,5 +10,4 @@ dogs = [1]
 hundar = 1
 temp = 0
 for index, gelt in enumerate(a):
-
-print(hundar)
+    pass

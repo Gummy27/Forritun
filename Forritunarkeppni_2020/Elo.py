@@ -25,6 +25,6 @@ while arnar <= limit:
         arnar += target[1]
     else:
         for x in available:
-            if
+            pass
 
 print(arnar)
