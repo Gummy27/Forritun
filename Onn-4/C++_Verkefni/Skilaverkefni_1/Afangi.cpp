@@ -1,10 +1,10 @@
 #include "Afangi.h"
 
 Afangi::Afangi(){
-    this->id = NULL;
+    this->id = 0;
     this->name = "";
-    this->einkunn = NULL;
-}
+    this->einkunn = 0;
+};
 
 Afangi::Afangi(int id, string name, double einkunn) {
     this->id = id;
