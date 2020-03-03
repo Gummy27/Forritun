@@ -6,14 +6,16 @@
 using namespace std;
 
 int main(){
-    Nemandi Geir = Nemandi(1, "Geir");
-    Geir.skra_afanga(1, "Forritun", 9.8);
-    Geir.skra_afanga(2, "Vefþróun", 4.5);
-    Geir.skra_afanga(3, "Kerfistjónun", 7.4);
-    cout << "This code is indeed working!" << endl;
+    Nemandi geir = Nemandi(11, "Geir");
+    geir.skra_afanga(33, "GAGN", 2.43);
+    geir.skra_afanga(34, "FORR", 3.59);
+    geir.skra_afanga(35, "ROBO", 10  );
+    geir.skra_afanga(36, "KEST", 6.249);
 
-    Geir.get_afangar();
+    geir.uppfaeraEinkunn(34, 4.49);
 
-    cout << "This code is indeed working!" << endl;
+    geir.eyda_afanga(33);
+
+    geir.prenta();
     return 0;
 }

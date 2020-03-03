@@ -24,10 +24,14 @@ class Nemandi {
         void set_name(string name);
 
         void skra_afanga(int id, string name, double einkunn);
+        void eyda_afanga(int id);
+
+        double round_up(double tala, int aukastafir);
+
         void add_space();
-        void get_afangar();
+        void prenta();
 
-
+        void uppfaeraEinkunn(int id, double einkunn);
         int empty_in_array();
 
 };
