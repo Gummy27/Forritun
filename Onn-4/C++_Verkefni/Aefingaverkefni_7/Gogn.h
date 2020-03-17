@@ -13,5 +13,6 @@ class Gogn {
         Gogn(int id, int numer);
 
         int getID();
+        int getNumer();
         void prentaGogn();
 };

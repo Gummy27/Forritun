@@ -7,26 +7,35 @@ using namespace std;
 int main() {
 
     RadadurListi listi;
-
+    
     listi.setjaILista(30, 40);
     listi.setjaILista(10, 20);
     listi.setjaILista(20, 30);
+
     listi.prentaLista();
-    /* ætti að skrifa út:
+    /*
+    ætti að skrifa út:
         ID: 10, Numer: 20
         ID: 20, Numer: 30
         ID: 30, Numer: 40 
+    */
     cout << endl;
     listi.eydaUrLista(10);
     listi.prentaLista();
+
+    /*
     ætti að skrifa út:
         ID: 20, Numer: 30
         ID: 30, Numer: 40 
     cout << endl;
+    */
+
     listi.eydaUrLista(30);
     listi.prentaLista();  
+    /*
     ætti að skrifa út:
-        ID: 20, Numer: 30 */
+        ID: 20, Numer: 30 
+    */
 
     return 0;
 }

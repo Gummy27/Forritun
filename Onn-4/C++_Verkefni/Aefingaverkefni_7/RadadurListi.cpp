@@ -1,4 +1,7 @@
 #include "RadadurListi.h"
+#include <iostream>
+
+using namespace std;
 
 RadadurListi::RadadurListi() {
     this->head = nullptr;
@@ -32,22 +35,40 @@ void RadadurListi::eydaUrLista(int id) {
     if(!this->erILista(id)) 
         return;
     if(this->head->data.getID() == id) {
-        // TODO
+        this->head = this->head->next;
     } else {
-        // TODO 
+        GognNode* current = this->head;
+        GognNode* prev = nullptr;
+        while(current != nullptr){
+            if(current->data.getID() == id){
+                prev->next = current->next;
+                delete [] current;
+            }
+            prev = current;
+            current = current->next;
+        }
     }
 }
 
 // fallið skilar true ef stak með id er í listanum annars false
 bool RadadurListi::erILista(int id) {
-    // TODO
+    GognNode* current = this->head;
+    while(current != nullptr){
+        if(current->data.getID() == id){
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
 }
 
 // fallið skrifar listann út á skjá
 void RadadurListi::prentaLista() {
     GognNode* current = this->head;
-    while(current->next){
-        cout << current->data;
+    while(current != nullptr){
+        cout << "Id: " << current->data.getID() 
+             << ", Data: " << current->data.getNumer() << endl;
+
         current = current->next;
     }
     cout << endl;
