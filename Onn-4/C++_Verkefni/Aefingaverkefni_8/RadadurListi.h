@@ -15,6 +15,7 @@ class RadadurListi {
         ~RadadurListi();
 
         RadadurListi(RadadurListi& gamliListinn);
+        int summa();
         bool operator<(RadadurListi& other);
         bool operator>(RadadurListi& other);
         bool operator<=(RadadurListi& other);

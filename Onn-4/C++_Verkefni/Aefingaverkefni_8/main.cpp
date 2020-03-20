@@ -19,6 +19,16 @@ int main() {
     listiA.setjaILista(40, 0);
     cout << "Listi 2:" << endl;
     listiB.prentaLista();
+
+    cout << endl;
+
+    cout << "Er listi B minni en listi A: " << (listiB < listiA) << endl;
+    cout << "Er listi B særri en listi A: "  << (listiB > listiA) << endl;
+    cout << "Er listi B minni eða samasem listi A: " << (listiB <= listiA) << endl;
+    cout << "Er listi B stærri eða samasem listi A: " << (listiB >= listiA) << endl;
+    cout << "Eru listarnir tveir jafnstórir: " << (listiB == listiA) << endl;
+    cout << "Eru listarnir tveir misstórir: " << (listiB != listiA) << endl;
+
     // listiB ætti ekki að innihalda 40 stakið
 
     // bæta við prófunum fyrir samanburðarvikjana

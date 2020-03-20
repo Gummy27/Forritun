@@ -29,26 +29,26 @@ bool Gogn::operator<(Gogn& other) {
 
 // Fallið skilar true ef numer í þessum klasa er stærra en numer í other
 bool Gogn::operator>(Gogn& other) {
-    // TODO:
+    return !(this->numer < other.numer);
 }
 
 // Fallið skilar true ef numer í þessum klasa er minna eða sama sem numer í other
 bool Gogn::operator<=(Gogn& other) {
-    // TODO:
+    return this->numer < other.numer || this->numer == other.numer;
 }
 
 // Fallið skilar true ef numer í þessum klasa er stærra eða sama sem numer í other
 bool Gogn::operator>=(Gogn& other) {
-    // TODO:
+    return !(this->numer < other.numer) || this->numer == other.numer;
 }
 
 // Fallið skilar true ef numer í þessum klasa er sama sem numer í other
 bool Gogn::operator==(Gogn& other) {
-    // TODO:
+    return this->numer == other.numer;
 }
 
 // Fallið skilar true ef numer í þessum klasa er ekki sama sem numer í other
 bool Gogn::operator!=(Gogn& other) {
-    // TODO:
+    return !(this->numer == other.numer);
 }
 

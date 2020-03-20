@@ -81,39 +81,75 @@ RadadurListi::~RadadurListi() {
 
 // Afritar öll gögnin úr stökunum úr gamliListinn yfir í þennan klasa
 RadadurListi::RadadurListi(RadadurListi& gamliListinn) {
-    //TODO:
+    GognNode* old_data = gamliListinn.head;
+    
+    GognNode* nyttStak = new GognNode(old_data->data.getID(), old_data->data.getNumer());
+    this->head = nyttStak;
+
+    GognNode* prev = nyttStak;
+    while(old_data->next != nullptr){
+        GognNode* nyttStak = new GognNode(old_data->data.getID(), old_data->data.getNumer());
+        prev->next = nyttStak;
+        prev = nyttStak;
+
+        old_data = old_data->next;
+    }
+}
+
+int RadadurListi::summa(){
+    GognNode* current = this->head;
+    int summan = 0;
+    while(current != nullptr){
+        summan += current->data.getNumer();
+        current = current->next;
+    }
+    return summan;
 }
 
 /* Skilar true ef summan af öllum Gogn.numer í þessum 
 klasa er minni en summan af öllum Gogn.numer í other */
 bool RadadurListi::operator<(RadadurListi& other) {
-    // TODO:
+    return summa() < other.summa();
 }
 
 /* Skilar true ef summan af öllum Gogn.numer í þessum 
 klasa er stærri en summan af öllum Gogn.numer í other */
 bool RadadurListi::operator>(RadadurListi& other) {
-    // TODO:
+    return !(summa() < other.summa());
 }
 
 /* Skilar true ef summan af öllum Gogn.numer í þessum 
 klasa er minni eða sama sem summan af öllum Gogn.numer í other */
 bool RadadurListi::operator<=(RadadurListi& other) {
-    // TODO:
+    return summa() < other.summa() || summa() == other.summa();
 }
 
 /* Skilar true ef summan af öllum Gogn.numer í þessum 
 klasa er stærri eða sama sem summan af öllum Gogn.numer í other */
 bool RadadurListi::operator>=(RadadurListi& other) {
-    // TODO:
+    return summa() > other.summa() || summa() == other.summa();
 }
 
 // Skilar true ef fjöldi staka í þessum klasa er sá sami og fjoldi staka í other
 bool RadadurListi::operator==(RadadurListi& other) {
-    // TODO:
+    GognNode* currentA = this->head;
+    int teljariA = 0, teljariB;
+    while(currentA != nullptr){
+        teljariA++;
+        currentA = currentA->next;
+    }
+
+    GognNode* currentB = other.head;
+    while(currentB != nullptr){
+        teljariB++;
+        currentB = currentB->next;
+    }
+
+    return teljariA == teljariB; 
+
 }
 
 // Skilar true ef fjöldi staka í þessum klasa er ekki sá sami og fjoldi staka í other
 bool RadadurListi::operator!=(RadadurListi& other) {
-    // TODO:
+    return !(this->head == other.head);
 }
