@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Gogn.h"
+#include "Verkefni.h"
 
 struct GognNode {
-    Gogn data;
+    Verkefni data;
     GognNode* next;
 
     GognNode(string verkefni, bool skolaverkefni, int mikilvaegi){
-        data = Gogn(verkefni, skolaverkefni, mikilvaegi);
+        data = Verkefni(verkefni, skolaverkefni, mikilvaegi);
         next = nullptr;
     }
 };
