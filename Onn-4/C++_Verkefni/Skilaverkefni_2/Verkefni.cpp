@@ -56,10 +56,15 @@ bool Verkefni::operator>=(Verkefni& other){
 
 
 bool Verkefni::operator==(Verkefni& other){
-    return !(*this < other || *this > other);
+    if(this->getSkolaverkefni() + other.getSkolaverkefni() != 1) {
+        if(this->mikilvaegi == other.mikilvaegi){
+            return true;
+        }
+    }
+    return false;
 };
 
 bool Verkefni::operator!=(Verkefni& other){
-    return (*this < other || *this > other);
+    return !(*this == other);
 };
 

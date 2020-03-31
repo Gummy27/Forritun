@@ -9,15 +9,13 @@ void VerkefnaListi::setjaILista(string verkefni, bool skolaverkefni, int mikilva
         this->head = new GognNode(verkefni, skolaverkefni, mikilvaegi);
     } else {
         GognNode* nyttStak = new GognNode(verkefni, skolaverkefni, mikilvaegi);
-        cout << skolaverkefni << ", " << mikilvaegi << " : " << this->head->data.getSkolaverkefni() << ", " << this->head->data.getMikilvaegi() << endl;
-        cout << (nyttStak->data < this->head->data) << endl;
-        if(nyttStak->data < this->head->data){
+        if(this->head->data < nyttStak->data){
             nyttStak->next = this->head;
             this->head = nyttStak;
         } else {
             GognNode* current = this->head;
             GognNode* prev = this->head;
-            while(current && current->data < nyttStak->data) {
+            while(current && current->data > nyttStak->data) {
                 prev = current;
                 current = current->next;
             }
