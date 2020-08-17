@@ -60,6 +60,9 @@ class AListi {
 };
 
 int main(){
+    B* b;
+    b->prenta();
+
     AListi listi;
     listi.SkraILista(new B());
     listi.SkraILista(new C());

@@ -9,4 +9,3 @@ else:
 minutu += annad[1] - fyrsta[1]
 
 print(minutu)
-
