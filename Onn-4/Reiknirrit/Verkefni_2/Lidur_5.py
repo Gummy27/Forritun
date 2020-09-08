@@ -1,0 +1,2 @@
+def samnefnari(n, m):
+    
