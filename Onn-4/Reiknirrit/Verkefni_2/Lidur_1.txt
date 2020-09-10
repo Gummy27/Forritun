@@ -1,0 +1,10 @@
+function binary_to_decimal(binary_number):
+    if the length of binary_number is 1:
+        return binary_number converted to integer
+    else:
+        if the first number of binary_number is not 0:
+            then decimal_number gets the number 2 to the power of length of binary_to_decimal
+        else:
+            decimal_number gets the number 0
+        return decimal_number + binary_to_decimal(binary_number[everything except the first number])
+        
