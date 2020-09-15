@@ -6,8 +6,8 @@ def runa(n):
     else:
         fall = runa(n-1)
         if fall > n:
-            return 0
+            return fall
         print(fall)
         return fall + 2
 
-runa(10)
+runa(19)
