@@ -5,11 +5,6 @@ location = "E:\Movies\The Good Place Season 4 Mp4 1080p"
 def stripZeroes(nr):
     return float(nr[:-1].lstrip('0') + nr[-1])
 
-def timeToInt(timi):
-    h, m, s = map(stripZeroes, timi.replace(',', '.').split(':'))
-
-    return h*60*60 + m*60 + s
-
 def roundFloat(nr, rounding):
     stop = len(str(nr).split('.')[1]) - rounding - 1
 
@@ -23,36 +18,50 @@ def roundFloat(nr, rounding):
             if value > 5:
                 listi[index+1] += 1
     
-    listi = listi[rounding-1:]
-    print(float(str(nr).split('.')[0]+'.'+''.join(map(str, listi[::-1]))))
+    listi = listi[stop+1:]
+
+    return(float(str(nr).split('.')[0]+'.'+''.join(map(str, listi[::-1]))))
+
+def timeToInt(timi):
+    h, m, s = map(stripZeroes, timi.replace(',', '.').split(':'))
+
+    return h*60*60 + m*60 + s
 
 def intToTime(timi):
-    dateTime = []
+    formattedTime = []
 
-    hh = str(timi//(60*60))
+    hh = str(int(timi//(60*60)))
     timi -= float(hh)*60*60
-    dateTime.insert(0, '0'+hh if len(hh) == 1 else hh)
+    formattedTime.insert(0, '0'+hh if len(hh) == 1 else hh)
 
-    mm = str(timi//60)
-    timi -= round(float(mm)*60, 2)
-    dateTime.insert(1, '0'+mm if len(mm) == 1 else mm)
+    mm = str(int(timi//60))
+    timi -= float(mm)*60
+    formattedTime.insert(1, '0'+mm if len(mm) == 1 else mm)
 
-    roundFloat(timi, 3)
+    if len(str(timi).split('.')[1]) > 3:
+        timi = roundFloat(timi, 3)
+    
+    s, ms = str(timi).split('.')
+    if len(s) == 1:
+        s = '0'+s
+    if len(ms) < 3:
+        ms = ms + ('0'*(3-len(ms)))
+        
+    formattedTime.insert(2, ','.join([s, ms]))
 
-    dateTime.insert(2, '0'+str(timi) if len(str(timi).split('.')[0]) == 1 else str(timi))
-    dateTime[2]
-    print(dateTime)
-    print(timi)
+    return ':'.join(formattedTime)
 
-intToTime(timeToInt("00:24:32,387"))
+def addToTime(formattedTime, seconds=0):
+    return intToTime(timeToInt(formattedTime)+seconds)
 
-
-'''
 with open("Subtitles.srt", 'r') as file:
     subtitles = file.readlines()
 
+timeToAdd = 3
+
+print("-----------------------------")
 for x in subtitles:
     if x[13:16] == "-->":
-        print(x[0:12], x[17:29])
-'''
-
+        print(x)
+        newTime = f"{addToTime(x[0:12], timeToAdd)} --> {addToTime(x[17:29], timeToAdd)}"
+        print(newTime)
