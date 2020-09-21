@@ -57,11 +57,13 @@ def addToTime(formattedTime, seconds=0):
 with open("Subtitles.srt", 'r') as file:
     subtitles = file.readlines()
 
-timeToAdd = 3
+timeToAdd = float(input("Hvað viltu breyta um mikið? : "))
 
-print("-----------------------------")
-for x in subtitles:
-    if x[13:16] == "-->":
-        print(x)
-        newTime = f"{addToTime(x[0:12], timeToAdd)} --> {addToTime(x[17:29], timeToAdd)}"
-        print(newTime)
+with open("Subtitles_copy.srt", 'w') as file:
+    for x in subtitles:
+        if x[13:16] == "-->":
+            newTime = f"{addToTime(x[0:12], timeToAdd)} --> {addToTime(x[17:29], timeToAdd)}\n"
+            file.write(newTime)
+        else:
+            file.write(x)
+        
