@@ -1,4 +1,13 @@
-from randomList import *
+import random
+import timeit
+
+def randomList(size=10*10^6):
+    listi = []
+    for x in range(size):
+        randomNr = random.randint(0, size)
+        if randomNr not in listi:
+            listi.append(randomNr)
+    return listi
 
 def isSorted(listi):
     for x, y in enumerate(listi[1:]):
@@ -6,7 +15,7 @@ def isSorted(listi):
             return False
     return True
 
-def bubbleSort(listi):
+def bubbleSort(listi=randomList()):
     comp = 0
     while True:
         if isSorted(listi):
@@ -18,5 +27,11 @@ def bubbleSort(listi):
                 listi[x] = listi[x+1]
                 listi[x+1] = temp
         comp += 1
-        
-print(bubbleSort(randomList()))
+
+def pythonSort(listi=randomList()):
+    listi.sort()
+
+print(timeit.timeit(bubbleSort))
+print(timeit.timeit(pythonSort))
+
+print(bubbleSort())
