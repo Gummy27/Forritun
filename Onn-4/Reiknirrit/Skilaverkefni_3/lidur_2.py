@@ -1,37 +1,44 @@
 import random
-import timeit
+import time
+from myBubbleSort import bubbleSort
+from netBubbleSort import bubbleSortWeb
 
-def randomList(size=10*10^6):
+def randomList(size):
     listi = []
     for x in range(size):
-        randomNr = random.randint(0, size)
-        if randomNr not in listi:
-            listi.append(randomNr)
+        listi.append(random.randint(0, size))
     return listi
 
-def isSorted(listi):
-    for x, y in enumerate(listi[1:]):
-        if(listi[x] > y):
-            return False
-    return True
+def timing(func, listi):
+    start = time.time()
+    func(listi)
+    timeString = str(time.time() - start)
+    return timeString+" "*(22-len(timeString))
 
-def bubbleSort(listi=randomList()):
-    comp = 0
-    while True:
-        if isSorted(listi):
-            return listi
-
-        for x in range(len(listi)-1):
-            if(listi[x] > listi[x+1]):
-                temp = listi[x]
-                listi[x] = listi[x+1]
-                listi[x+1] = temp
-        comp += 1
-
-def pythonSort(listi=randomList()):
+def pythonSort(listi):
+    start = time.time()
     listi.sort()
+    timeString = str(time.time() - start)
+    return timeString+" "*(22-len(timeString))
 
-print(timeit.timeit(bubbleSort))
-print(timeit.timeit(pythonSort))
+sizeOfList = int(input("Hve stóran lista viltu að algrímin raða? : "))
+randomizedList1 = randomList(sizeOfList)
+randomizedList2 = randomList(sizeOfList)
+backwardsList = list(range(sizeOfList, 0, -1))
 
-print(bubbleSort())
+
+print("Algrím:                              | Random Listi Tilraun 1 | Random Listi Tilraun 2 | Versta Tilvik ")
+print("Bubble sort algrímið mitt:           |", 
+      timing(bubbleSort, randomizedList1), 
+      "|", timing(bubbleSort, randomizedList2),
+      "|", timing(bubbleSort, backwardsList))
+
+print("Bubble sort sem tekið var af netinu: |", 
+       timing(bubbleSortWeb, randomizedList1), 
+       "|", timing(bubbleSortWeb, randomizedList2), 
+       "|",timing(bubbleSortWeb, backwardsList))
+
+print("Innbyggða python röðunar algrímið:   |", 
+       pythonSort(randomizedList1), 
+       "|", pythonSort(randomizedList2) , 
+       "|",pythonSort(backwardsList))
