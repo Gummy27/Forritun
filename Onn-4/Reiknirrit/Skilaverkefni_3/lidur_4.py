@@ -11,11 +11,12 @@ def fall(L):
         summa += countL[i]
         countL[i] = summa
     
+    print(countL, resultL, "\n")
     for i in range(len(L)):
         resultL[countL[L[i]]-1] = L[i]
         countL[L[i]] -= 1
-
+        print(countL, resultL)
     return resultL
 
 L = [7,1,8,2,5,10,8,9,3,6,1]
-print(fall(L))
+fall(L)

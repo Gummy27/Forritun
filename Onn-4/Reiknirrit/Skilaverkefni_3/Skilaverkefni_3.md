@@ -61,3 +61,36 @@ Flækjustigið á bubble sort, eins og kom fram áðan, er O(n^2) sem er eitt af
 
 #### [Kóðinn](https://github.com/Gummy27/Forritun/blob/master/Onn-4/Reiknirrit/Skilaverkefni_3/lidur_3.py)
 
+### Liður 4
+
+> def fall(L):
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;haesta = max(L)
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL = [0]*(haesta+1)
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resultL = [0]*len(L)
+>  
+
+
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in L:
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL[i] += 1
+>  
+Þessi for lykkja fer í gegnum listann countL og plúsar stökin sem samsvara tölunum í L listanum. Listinn sýnir hve margar tölur af sömu sort eru í listanum. t.d ef countL er [0, 1, 2] þá eru enginn 0, 1 tilvik af tölunni 1 og 2 tilvik af tölunni 2.
+
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summa = 0
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(countL)):
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summa += countL[i]
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL[i] = summa
+
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(L)):
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resultL[countL[L[i]]-1] = L[i]
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL[L[i]] -= 1
+>  
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return resultL
+>
+> L = [7,1,8,2,5,10,8,9,3,6,1]
+>print(fall(L))
+
+
+
+### Liður 5
+[Forritið](https://github.com/Gummy27/Forritun/blob/master/Onn-4/Reiknirrit/Skilaverkefni_3/lidur_5.py) hefur flækjustigið O(n) þar sem það keyrir í versta falli í gegnum allan listann aðeins einu sinni.
