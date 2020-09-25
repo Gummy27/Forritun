@@ -2,7 +2,7 @@
 #### O(n)
 Þetta flækjustig táknar algrím sem keyrir aðeins einu sinni fyrir hvert stak. Dæmi um forrit sem eru með O(n) flækjustig er einföld for lykkja:
 
-> fyrir hvert stak í rununni 0 til n:
+> fyrir hvert stak í rununni 0 til n: <br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prentaðu töluna sem lykkjan er á
 
 Prent skipuninn hefur flækjustigið O(1) og þar sem það verður endurtekið n sinnum þá er flækjustigið n * O(1) eða O(n)
@@ -11,8 +11,8 @@ Prent skipuninn hefur flækjustigið O(1) og þar sem það verður endurtekið 
 
 Þetta flækjustig myndast þegar for lykkja er hreiðruð í annari for lykkju. Dæmið er mjög líkt fyrra dæminu nema einni for lykkju er bætt við:
 
-> fyrir hvert stak í rununni 0 til n:
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fyrir hvert stak í rununni 0 til k:
+> fyrir hvert stak í rununni 0 til n:<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fyrir hvert stak í rununni 0 til k:<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prentaðu fyrra stakið sinnum seinna stakið
 
 #### O(n * log(n))
@@ -31,8 +31,8 @@ Svo fyrir þetta verkefni langaði mig ekki bara bera saman .sort og mitt bubble
 Síðar er það hvernig ég tímamælti þetta. Ég ákvað að nota time module til að taka tímann:
 > import time
 >
-> start = time.time()
-> time.sleep(3)
+> start = time.time()<br>
+> time.sleep(3)<br>
 > print(time.time() - start)
 
 Þetta ætti að prenta tölu sem er mjög nálægt 3 sekúndum. Þessi aðferð er að sjálfsögðu ekki fullkominn en hún er nógu góð fyrir þetta verkefni.
@@ -66,22 +66,22 @@ Flækjustigið á bubble sort, eins og kom fram áðan, er O(n^2) sem er eitt af
 
 ### <ins>Liður 4</ins>
 #### Kóðinn er útskýrður.
-> def fall(L):
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;haesta = max(L)
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL = [0]*(haesta+1)
+> def fall(L):<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;haesta = max(L)<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL = [0]*(haesta+1)<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resultL = [0]*len(L)
 >  
 
 Nokkrar breytur er skilgreindar. haesta breytan mun aðeins vera notuð einu sinni til að skilgreina hve mörg stök countL þarf til að telja eintök af tölum. countL listinn er notaður til að telja hve margar tölur af einu tagi eru í óraðaða listanum. Og resultL er listinn sem raðað verður í á eftir.
 
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in L:
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in L:<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL[i] += 1
 >  
 Þessi for lykkja fer í gegnum listann countL og plúsar stökin sem samsvara tölunum í L listanum. Listinn sýnir hve margar tölur af sömu sort eru í listanum. t.d ef countL er [0, 1, 2] þá eru enginn 0, 1 tilvik af tölunni 1 og 2 tilvik af tölunni 2.
 
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summa = 0
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(countL)):
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summa += countL[i]
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summa = 0<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(countL)):<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summa += countL[i]<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL[i] = summa
 
 Þessi for lykkja fer í gegnum countL og plúsar stökin saman: 
@@ -90,8 +90,8 @@ Dæmi:
 Listinn sem myndast úr þessu segir staðsetningu stakana í röðuðum lista. 
 
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(L)):
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resultL[countL[L[i]]-1] = L[i]
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for i in range(len(L)):<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resultL[countL[L[i]]-1] = L[i]<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countL[L[i]] -= 1
 >  
 Hérna kemur aðal for lykkjan sem loks raðar listann. Þetta lítur út fyrir að vera flókið en í rauninni er þetta heldur einfalt. Besta leiðin til að útskýra hvað er í gangi er að brjóta þetta aðeins niður. 
@@ -104,8 +104,8 @@ Hérna kemur aðal for lykkjan sem loks raðar listann. Þetta lítur út fyrir 
 
 Þessi kóði segir hvar talan sem L[i] er á, er í raðaða listanum. T.d.
 
-> countL = [1, 2, 3]
-> L = [2, 1, 0]
+> countL = [1, 2, 3]<br>
+> L = [2, 1, 0]<br>
 > countL[1] # skilar 2 sem er staðsetning staksins í resultL listanum.
 
 > resultL[countL[L[i]]-1] = L[i]
