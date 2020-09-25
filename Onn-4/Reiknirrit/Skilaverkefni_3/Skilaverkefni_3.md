@@ -1,4 +1,4 @@
-### <ins>Liður 1</ins>
+## <ins>Liður 1</ins>
 #### O(n)
 Þetta flækjustig táknar algrím sem keyrir aðeins einu sinni fyrir hvert stak. Dæmi um forrit sem eru með O(n) flækjustig er einföld for lykkja:
 
@@ -20,7 +20,7 @@ Prent skipuninn hefur flækjustigið O(1) og þar sem það verður endurtekið 
 
 ----
 
-### <ins>Liður 2</ins>
+## <ins>Liður 2</ins>
 
 #### Formál
 Svo fyrir þetta verkefni langaði mig ekki bara bera saman .sort og mitt bubblesort algrím. Heldur líka bera mitt bubblesort algrím við bubble sort algrím sem ég fann á netinu. 
@@ -60,7 +60,7 @@ Flækjustigið á bubble sort, eins og kom fram áðan, er O(n^2) sem er eitt af
 
 ----
 
-### <ins>Liður 3</ins>
+## <ins>Liður 3</ins>
 
 #### [Kóðinn](https://github.com/Gummy27/Forritun/blob/master/Onn-4/Reiknirrit/Skilaverkefni_3/lidur_3.py)
 
@@ -120,5 +120,5 @@ Síðasta aðgerðin er að draga einn frá countL[L[i]]. Eins og þú mannst þ
 
 Þetta röðunar algrím kallast "counting sort" og hefur flækjustigið O(n+k) þar sem n er lengd listans L og k er lengd listans countL. 
 
-### <ins>Liður 5</ins>
+## <ins>Liður 5</ins>
 [Forritið](https://github.com/Gummy27/Forritun/blob/master/Onn-4/Reiknirrit/Skilaverkefni_3/lidur_5.py) hefur flækjustigið O(n) þar sem það keyrir í versta falli í gegnum allan listann aðeins einu sinni.
