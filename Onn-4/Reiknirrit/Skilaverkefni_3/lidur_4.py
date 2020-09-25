@@ -15,8 +15,8 @@ def fall(L):
     for i in range(len(L)):
         resultL[countL[L[i]]-1] = L[i]
         countL[L[i]] -= 1
-        print(countL, resultL)
+        print(L[i], countL[L[i]]-1, resultL)
     return resultL
 
-L = [7,1,8,2,5,10,8,9,3,6,1]
-fall(L)
+L = [7,0,8,2,5,10,8,9,3,6,1]
+print("\n", fall(L))
