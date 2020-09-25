@@ -64,7 +64,9 @@ Flækjustigið á bubble sort, eins og kom fram áðan, er O(n^2) sem er eitt af
 
 #### [Kóðinn](https://github.com/Gummy27/Forritun/blob/master/Onn-4/Reiknirrit/Skilaverkefni_3/lidur_3.py)
 
-### <ins>Liður 4</ins>
+----
+
+## <ins>Liður 4</ins>
 #### Kóðinn er útskýrður.
 > def fall(L):<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;haesta = max(L)<br>
