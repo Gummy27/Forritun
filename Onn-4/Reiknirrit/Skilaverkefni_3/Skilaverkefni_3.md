@@ -16,16 +16,16 @@ Prent skipuninn hefur flækjustigið O(1) og þar sem það verður endurtekið 
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; prentaðu fyrra stakið sinnum seinna stakið
 
 #### O(n * log(n))
-Þarna erum við kominn í frekar flókna stærðfræði. Aðgerðunum er hægt að skipta í tvennt. Fyrst er það O(n) og síðar O(log(n)). Við vitum að O(n) er bara þegar við keyrum einu sinni í gegn en hvað er O(log(n))? O(log(n)) myndast þegar flóknari aðgerðir eru gerðar til að flýta algrímum s.s. "Divide and conquer" aðferð og fleira. Eitt dæmi um "divide and conquer" aðferð er binary search. Það er býsna flókinn aðferð sem oft flýtir fyrir leitar algrímum þar sem það notar "divide and conquer" hugmyndafræðina. Svo O(n * log(n)) er í rauninni þetta tvennt lagt saman. Mörg röðunaralgrím hafa þetta flækjustig þar sem þau nota flókna leiðir til að gera einmitt "divide and conquer". Dæmi eru Mergesort, Heapsort og Timsort.
+Þarna erum við kominn í frekar flókna stærðfræði. Aðgerðunum er hægt að skipta í tvennt. Fyrst er það O(n) og síðar O(log(n)). Við vitum að O(n) er bara þegar við keyrum einu sinni í gegnum lista en hvað er O(log(n))? O(log(n)) myndast þegar flóknari aðgerðir eru gerðar til að flýta algrímum s.s. "Divide and conquer" aðferð og fleira. Eitt dæmi um "divide and conquer" aðferð er binary search. Það er býsna flókinn aðferð sem oft flýtir fyrir leitar algrímum þar sem það notar "divide and conquer" hugmyndafræðina. Svo O(n * log(n)) er í rauninni þetta tvennt lagt saman. Mörg röðunaralgrím hafa þetta flækjustig þar sem þau nota flókna leiðir til að gera einmitt "divide and conquer". Dæmi eru Mergesort, Heapsort og Timsort.
 
 ----
 
 ## <ins>Liður 2</ins>
 
 #### Formál
-Svo fyrir þetta verkefni langaði mig ekki bara bera saman .sort og mitt bubblesort algrím. Heldur líka bera mitt bubblesort algrím við bubble sort algrím sem ég fann á netinu. 
+Svo fyrir þetta verkefni langaði mig ekki bara bera saman python sort og mitt bubblesort algrím. Heldur líka bera mitt bubblesort algrím við bubble sort algrím sem ég fann á netinu. 
 
-Ég valdi að forrita bubble sort sem hefur flækjustigið O(n^2) sen er eitt það versta flækjustig sem þú getur fengið. Þetta er einmitt ástæðan fyrir því að ég gat ekki prófað lista með milljón stök. O(milljón í öðru veldi) er O(1.000.000.000.000). Að sjálfsögðu gæti ég keyrt þetta ef að ég hefði flotta skammtatölvu frá google en því miður er ég fastur með 6 ára tölvunni minni. 
+Ég valdi að forrita bubble sort sem hefur flækjustigið O(n^2) sem er eitt það versta flækjustig sem þú getur fengið. Þetta er einmitt ástæðan fyrir því að ég gat ekki prófað lista með milljón stök. O(milljón í öðru veldi) er O(1.000.000.000.000). Að sjálfsögðu gæti ég keyrt þetta ef að ég hefði flotta skammtatölvu frá google en því miður er ég fastur með 6 ára tölvunni minni. 
 
 
 Síðar er það hvernig ég tímamælti þetta. Ég ákvað að nota time module til að taka tímann:
