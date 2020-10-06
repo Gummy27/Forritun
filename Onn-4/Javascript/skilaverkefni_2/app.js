@@ -19,18 +19,6 @@ class Shape{
         this.size = size;   
     }
 
-    draw() {
-        ctx.beginPath();
-        ctx.moveTo(this.x + this.size * Math.cos(0), this.y + this.size * Math.sin(0));
-
-        for (let side = 0; side < 7; side++) {
-            ctx.lineTo(this.x + this.size * Math.cos(side * 2 * Math.PI / 6), this.y + this.size * Math.sin(side * 2 * Math.PI / 6));
-        }
-
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-
     update() {
         if ((this.x + this.size) >= width) {
             this.velX = -(this.velX);
@@ -75,12 +63,14 @@ class EvilShape extends Shape {
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.moveTo(this.x + this.size * Math.cos(0), this.y + this.size * Math.sin(0));
+        ctx.moveTo(this.x + this.size, this.y + this.size);
 
-        for (let side = 0; side < 7; side++) {
-            ctx.lineTo(this.x + this.size * Math.cos(side * 2 * Math.PI / 6), this.y + this.size * Math.sin(side * 2 * Math.PI / 6));
-        }
+        ctx.beginPath();
+        ctx.lineTo(this.x, this.y);
+        ctx.lineTo(this.x, this.y+this.size*2);
+        ctx.lineTo(this.x+this.size*2, this.y+this.size*2);
+        ctx.lineTo(this.x+this.size*2, this.y);
+        ctx.lineTo(this.x, this.y);
 
         ctx.strokeStyle = this.color;
         ctx.stroke();
@@ -98,6 +88,7 @@ class EvilShape extends Shape {
                         this.velX += 4;
                         this.velY += 4;
                         goodShapes[j].killed(j);
+                        score.textContent = 'Ball count: ' + goodShapes.length;
                         j--;
                     }
                 }
@@ -117,11 +108,22 @@ class GoodShape extends Shape {
         goodShapes.splice(index, 1);
         this.color = "black";
     }
+
+    draw() {
+        ctx.beginPath();
+        ctx.moveTo(this.x + this.size * Math.cos(0), this.y + this.size * Math.sin(0));
+
+        for (let side = 0; side < 7; side++) {
+            ctx.lineTo(this.x + this.size * Math.cos(side * 2 * Math.PI / 6), this.y + this.size * Math.sin(side * 2 * Math.PI / 6));
+        }
+
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
 }
 
 
 let goodShapes = [];
-
 while (goodShapes.length < 25) {
     let size = random(10, 20);
     let shape = new GoodShape(
@@ -149,9 +151,14 @@ while (evilShapes.length < 2) {
     evilShapes.push(evilShape);
 }
 
+const score = document.querySelector('p');
+score.textContent = 'Ball count: ' + goodShapes.length;
+var background = new Image()
+background.src = "background.jpg"
 function loop() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
-    ctx.fillRect(0, 0, width, height);
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+    // ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+    // ctx.fillRect(0, 0, width, height);
   
     for (let i = 0; i < goodShapes.length; i++) {
       goodShapes[i].draw();
