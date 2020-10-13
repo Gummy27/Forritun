@@ -27,7 +27,7 @@ class Vigur:
 
     # Fall sem skilar stefnuhorni
     def stefnuhorn(self):
-        return round(math.degrees(math.atan(self.y/self.x)), 2)
+        return round(math.degrees(math.atan(self.y/self.x)), 1)
     
     # Fall sem tekur vigur sem parameter og skilar horni milli vigra
     def horn(self,v):
