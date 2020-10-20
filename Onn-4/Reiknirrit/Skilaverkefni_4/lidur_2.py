@@ -106,6 +106,7 @@ def plug_in_heildath_fall(heildath_fall, efri, nedri):
 
     return flatarmal_efri - flatarmal_nedri
 
+print("Syntax: -x2+2")
 fall = input("Sláðu inn fallið: f(x)=")
 efriX = float(input("Sláðu inn x fyrir efri mörk:"))
 nedriX = float(input("Sláðu inn x fyrir neðri mörk:"))
