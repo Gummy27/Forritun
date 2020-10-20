@@ -41,6 +41,8 @@ def marglitha_i_lista(marglitha):
 
 # Þetta fall tekur inn listann með alla liðina og skilur að fasta og veldi.
 def skilja_ath_fasta_og_veldi(listuth_margliða):
+    listuth_margliða = marglitha_i_lista(listuth_margliða)
+
     til_heildunar = [] # Þessi listi mun halda utan um kláraðan lista.
 
     # Þessi for lykkja mun fara í gegnum listaða margliðuna og skilja að veldi og fasta.
@@ -66,6 +68,8 @@ def skilja_ath_fasta_og_veldi(listuth_margliða):
 
 # Þetta fall mun taka inn lista sem er búinn að skilja að fasta og veldi. Jafnan er loksins heilduð.
 def heildun(til_heildunar):
+    til_heildunar = skilja_ath_fasta_og_veldi(til_heildunar)
+
     # Þessi lykkja mun fara í gegnum listann og taka inn indexið. Þetta er gert til þess að auðvelda
     # það að breyta listanum.
     for x in range(len(til_heildunar)):
@@ -73,7 +77,6 @@ def heildun(til_heildunar):
         # gert er að veldi er sett í 1. Ástæða fyrir því kemur í ljós síðar þegar jafnan er reiknuð.
         if len(til_heildunar[x]) == 1:
             til_heildunar[x] = [til_heildunar[x][0], 1]
-            print(til_heildunar[x])
         else:
             til_heildunar[x][1] += 1 # Þegar veldi x er heildað er það hækkað um einn. 
             # Síðan er x-ið margfaldað með 1/nýja veldið svo hér sinnuma ég fastann við það.
@@ -82,7 +85,6 @@ def heildun(til_heildunar):
 
 # Þetta fall tekur inn heildath, listað, aðskilið fall og x ása og reiknar flatarmál.
 def plug_in_heildath_fall(heildath_fall, efri, nedri):
-    heildun(heildath_fall)
     flatarmal_efri = 0 # Þessi breyta mun halda utan um flatarmál efri part jöfnunar.
     for x in fallith_heildath:
         '''
@@ -112,7 +114,13 @@ fall = "-x2+2"
 efriX = 1
 nedriX = -1
 
-fallith_heildath = heildun(skilja_ath_fasta_og_veldi(marglitha_i_lista(fall)))
+'''
+Aðeins með föllinn:
+Ég skipti aðgerðunum niður í þrjú föll sem kalla síðan á hvorn annan. Ástæðan fyrir því er 
+readability. Ef að öll föllinn væru saman í einni steypu þá væri villuleit erfið og einnig 
+mat á kóðanum sjálfum. Það er mun léttara að skilja forrit þegar þau eru brotin niður.
+'''
+fallith_heildath = heildun(fall)
 
-print(plug_in_heildath_fall(fallith_heildath, efriX, nedriX))
+print("Flatarmálið er :", plug_in_heildath_fall(fallith_heildath, efriX, nedriX))
 
