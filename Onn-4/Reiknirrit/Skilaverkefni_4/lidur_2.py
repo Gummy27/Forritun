@@ -106,13 +106,9 @@ def plug_in_heildath_fall(heildath_fall, efri, nedri):
 
     return flatarmal_efri - flatarmal_nedri
 
-#fall = input("Sláðu inn fallið: f(x)=")
-#efriX = input("Sláðu inn x fyrir efri mörk:")
-#nedriX = input("Sláðu inn x fyrir neðri mörk:")
-
-fall = "-x2+2"
-efriX = 1
-nedriX = -1
+fall = input("Sláðu inn fallið: f(x)=")
+efriX = float(input("Sláðu inn x fyrir efri mörk:"))
+nedriX = float(input("Sláðu inn x fyrir neðri mörk:"))
 
 '''
 Aðeins með föllinn:
